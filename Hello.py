@@ -24,7 +24,7 @@ LOGGER = get_logger(__name__)
 def run():
     st.set_page_config(
         page_title="Retirement Simulator",
-        page_icon="🎲",
+        page_icon="💵",
     )
 
     st.write("# 🎲 Predict your financial future ")
@@ -41,10 +41,24 @@ def run():
     investor = st.selectbox(
       'What type of investor are you?',
       ('Moderate', 'Aggressive', 'Conservative', 'Nervous'))
+    
+    #getting the future returns dataframe
+    future_returns = pd.read_csv('data/futurereturns.csv')
+
+    #pulling the returns from the futures dataframe, preparation for the forecasting function
+    aggressive = {'aggressive_investor':list(future_returns['Aggressive Future'])}
+    moderate = {'moderate_investor': list(future_returns['Moderate Future'])}
+    conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
+    nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
+
+    from function import retirement_forecast, retirement_plot
 
     st.write('You selected:', investor)
     if investor == 'Aggressive':
      st.markdown('*Aggressive investors have a high risk tolerance and are willing to risk more money for the possibility of better, yet unknown, returns.*')
+     aggressive_values = retirement_forecast(aggressive, investment, years)
+     st.dataframe(aggressive_values)
+     retirement_plot(aggressive_values, investor, investment)
     if investor == 'Moderate':
       st.markdown("*Moderate investors want to grow their money without losing too much. Their goal is to weigh opportunities and risks and this investor's approach is sometimes described as a “balanced” strategy.*")
     if investor == 'Conservative':
@@ -53,12 +67,7 @@ def run():
       st.markdown('*Nervous investors have financial anxiety and often react to the market. When the market drops, the nervous investor pulls their money out of the stock market, waiting to reinvest when returns remain positive.*')
 
 
-    future_returns = pd.read_csv('data/futurereturns.csv')
-    #pulling the returns from the futures dataframe, preparation for the forecasting function
-    aggressive = {'aggressive_investor':list(future_returns['Aggressive Future'])}
-    moderate = {'moderate_investor': list(future_returns['Moderate Future'])}
-    conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
-    nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
+
     # st.dataframe(my_dataframe)
     # forecast_values = retirement_forecast(investor,investment,years)
     # st.dataframe(forecast_values)
