@@ -31,6 +31,14 @@ def show_code(demo):
         sourcelines, _ = inspect.getsourcelines(demo)
         st.code(textwrap.dedent("".join(sourcelines[1:])))
 
+future_returns = pd.read_csv('data/futurereturns.csv')
+
+#pulling the returns from the futures dataframe, preparation for the forecasting function
+aggressive = {'aggressive_investor':list(future_returns['Aggressive Future'])}
+moderate = {'moderate_investor': list(future_returns['Moderate Future'])}
+conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
+nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
+
 #based on the rate distribution patterns, the negative counter function is only used for the aggressive return rates
 #function to calculate the percentage of negative return rates
 def negative_counter(list):

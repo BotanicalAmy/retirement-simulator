@@ -14,6 +14,10 @@
 
 import streamlit as st
 from streamlit.logger import get_logger
+from datetime import datetime
+import random
+import pandas as pd
+import numpy as np
 
 LOGGER = get_logger(__name__)
 
@@ -49,8 +53,15 @@ def run():
       st.markdown('*Nervous investors have financial anxiety and often react to the market. When the market drops, the nervous investor pulls their money out of the stock market, waiting to reinvest when returns remain positive.*')
 
 
-
+    future_returns = pd.read_csv('data/futurereturns.csv')
+    #pulling the returns from the futures dataframe, preparation for the forecasting function
+    aggressive = {'aggressive_investor':list(future_returns['Aggressive Future'])}
+    moderate = {'moderate_investor': list(future_returns['Moderate Future'])}
+    conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
+    nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
     # st.dataframe(my_dataframe)
+    # forecast_values = retirement_forecast(investor,investment,years)
+    # st.dataframe(forecast_values)
 
     st.sidebar.success("Select a demo above.")
 
