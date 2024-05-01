@@ -17,16 +17,43 @@ from streamlit.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
-
 def run():
     st.set_page_config(
         page_title="Retirement Simulator",
-        page_icon="👋",
+        page_icon="🎲",
     )
 
-    st.write("# :balloon: Welcome to Streamlit! 👋")
+    st.write("# 🎲 Predict your financial future ")
+    st.write("Welcome to my retirement forecaster")
+
+    #selecting investment types
+    st.markdown('#### How long will you invest? ####')
+    years = st.slider('How many years will you invest?', 10, 50, 20, label_visibility="hidden")
+    st.write("I plan to invest for ", years, 'years')
+    st.markdown('#### What is your initial investment? ####')
+    investment = st.number_input(label="Enter your initial investment", label_visibility="hidden", value=None, placeholder='Type a number...', min_value=10000)
+    st.write('The initial investment is $',investment)
+
+    investor = st.selectbox(
+      'What type of investor are you?',
+      ('Moderate', 'Aggressive', 'Conservative', 'Nervous'))
+
+    st.write('You selected:', investor)
+    if investor == 'Aggressive':
+     st.markdown('*Aggressive investors have a high risk tolerance and are willing to risk more money for the possibility of better, yet unknown, returns.*')
+    if investor == 'Moderate':
+      st.markdown("*Moderate investors want to grow their money without losing too much. Their goal is to weigh opportunities and risks and this investor's approach is sometimes described as a “balanced” strategy.*")
+    if investor == 'Conservative':
+      st.markdown('*Conservative investors are willing to accept little to no volatility in their investment portfolios. Retirees or those close to retirement are usually in this category.*')
+    if investor == 'Nervous':
+      st.markdown('*Nervous investors have financial anxiety and often react to the market. When the market drops, the nervous investor pulls their money out of the stock market, waiting to reinvest when returns remain positive.*')
+
+
+
+    # st.dataframe(my_dataframe)
 
     st.sidebar.success("Select a demo above.")
+
 
     st.markdown(
         """
