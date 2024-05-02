@@ -130,7 +130,3 @@ def retirement_values(data):
 
     return retirement_df
 
-    # st.write((f'The highest projected value in {final_year} is ${highest_value:,.0f}'))
-    # st.write((f'The lowest projected value in {final_year} is ${lowest_value:,.0f}'))
-    # st.write((f'The average projected value in {final_year} is ${average_value:,.0f}'))
-    # st.write((f'The average return rate for the portfolio is {return_forecast:.2f}%'))
