@@ -4,3 +4,5 @@ pandas
 pydeck
 streamlit
 plotly
+scikit-learn
+seaborn
