@@ -3,7 +3,6 @@ import random
 import pandas as pd
 import numpy as np
 import plotly.express as px
-from streamlit_extras.let_it_rain import rain
 
 #based on the rate distribution patterns, the negative counter function is only used for the aggressive return rates
 #function to calculate the percentage of negative return rates
@@ -128,13 +127,5 @@ def retirement_values(data):
     retirement_df.set_index('Final Year', inplace=True)
 
     return retirement_df
-
-def celebrate():
-    rain(
-        emoji="💵",
-        font_size=25,
-        falling_speed=5,
-        animation_length="5",
-    )
 
 
