@@ -29,9 +29,11 @@ def run():
     )
 
     st.write("# 🎲 Predict your financial future ")
-    st.write("Welcome to my retirement forecaster")
+    st.markdown("### Welcome to my retirement forecaster ")
+    st.write('The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Predict my Future" will create a series of five, hypothetical investment forecasts.')
 
     col1, col2 = st.columns(2, gap="medium")
+
 
     with col1:
       #select starting investment value
@@ -61,6 +63,7 @@ def run():
     moderate = {'moderate_investor': list(future_returns['Moderate Future'])}
     conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
     nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
+    show_predict=False
 
 
     st.write('You selected:', investor)
@@ -68,6 +71,7 @@ def run():
      st.markdown('*Aggressive investors have a high risk tolerance and are willing to risk more money for the possibility of better, yet unknown, returns.*')
      aggressive_values = retirement_forecast(aggressive, investment, years)
      plot = retirement_plot(aggressive_values, investment)
+     show_predict = True
     #  st.plotly_chart(plot, use_container_width=True, theme="streamlit")
     #  return_df = retirement_values(aggressive_values)
     #  st.dataframe(return_df)
@@ -78,7 +82,8 @@ def run():
     if investor == 'Nervous':
       st.markdown('*Nervous investors have financial anxiety and often react to the market. When the market drops, the nervous investor pulls their money out of the stock market, waiting to reinvest when returns remain positive.*')
 
-    if st.button("Predict my future"):
+    if show_predict is True:
+      st.button("Predict my future")
       st.plotly_chart(plot, use_container_width=True, theme="streamlit")
       return_df = retirement_values(aggressive_values)
       st.dataframe(return_df)
