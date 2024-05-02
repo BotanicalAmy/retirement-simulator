@@ -92,7 +92,6 @@ def ai_forecast():
 
 
 
-
 ai_forecast()
 
 st.divider()
