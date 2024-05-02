@@ -17,7 +17,7 @@
 import numpy as np
 import streamlit as st
 import time
-from model import retirement_prediction, IQR, Q1, Q3, confidence_interval
+from model import retirement_prediction
 import pandas as pd
 import numpy as np
 import seaborn as sns
