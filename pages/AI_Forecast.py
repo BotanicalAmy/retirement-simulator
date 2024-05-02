@@ -100,7 +100,7 @@ st.divider()
 forecast_data = pd.read_csv('data/forecast_results.csv')
 forecast_data.drop('Unnamed: 0', axis=1, inplace=True)
 
-st.write("Going to replace the seaborn line chart with a nicer looking one created in Illustrator")
+st.write("Will be replaced with a niver looking line chart created in Illustrator")
 
 
 #lineplot of the original forecast data to show affect of investor type on final value
