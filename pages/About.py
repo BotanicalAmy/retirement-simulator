@@ -16,7 +16,7 @@
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-from model import retirement_prediction, IQR, Q1, Q3, confidence_interval
+from model import IQR, Q1, Q3, confidence_interval
 import numpy as np
 import statistics as stat
 
