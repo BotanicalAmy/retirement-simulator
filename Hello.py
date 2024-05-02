@@ -18,6 +18,7 @@ from datetime import datetime
 import random
 import pandas as pd
 import numpy as np
+from function import retirement_forecast, retirement_plot, retirement_values
 
 LOGGER = get_logger(__name__)
 
@@ -30,17 +31,27 @@ def run():
     st.write("# 🎲 Predict your financial future ")
     st.write("Welcome to my retirement forecaster")
 
-    #selecting investment types
-    st.markdown('#### How long will you invest? ####')
-    years = st.slider('How many years will you invest?', 10, 50, 20, label_visibility="hidden")
-    st.write("I plan to invest for ", years, 'years')
-    st.markdown('#### What is your initial investment? ####')
-    investment = st.number_input(label="Enter your initial investment", label_visibility="hidden", value=None, placeholder='Type a number...', min_value=10000)
-    st.write('The initial investment is $',investment)
+    col1, col2 = st.columns(2, gap="medium")
 
-    investor = st.selectbox(
-      'What type of investor are you?',
-      ('Moderate', 'Aggressive', 'Conservative', 'Nervous'))
+    with col1:
+      #select starting investment value
+      st.markdown('**What is your initial investment?**')
+      investment = st.number_input(label="Enter your initial investment", label_visibility="collapsed", value=None, placeholder='Type a number...', min_value=10000)
+      st.write('The initial investment is $',investment)
+
+      #select investor type
+      st.markdown('**What type of investor are you?**')
+      investor = st.selectbox('What type of investor are you?',
+      ('Moderate', 'Aggressive', 'Conservative', 'Nervous'), label_visibility="collapsed")
+
+    with col2:
+      #select the number of years to forecast
+      st.markdown('**How long will you invest?**')
+      years = st.slider('How many years will you invest?', 10, 50, 20, label_visibility="collapsed")
+      st.write("I plan to invest for ", years, 'years')
+    
+    st.divider()
+
     
     #getting the future returns dataframe
     future_returns = pd.read_csv('data/futurereturns.csv')
@@ -51,20 +62,26 @@ def run():
     conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
     nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
 
-    from function import retirement_forecast, retirement_plot
 
     st.write('You selected:', investor)
     if investor == 'Aggressive':
      st.markdown('*Aggressive investors have a high risk tolerance and are willing to risk more money for the possibility of better, yet unknown, returns.*')
      aggressive_values = retirement_forecast(aggressive, investment, years)
-     st.dataframe(aggressive_values)
-     retirement_plot(aggressive_values, investor, investment)
+     plot = retirement_plot(aggressive_values, investment)
+    #  st.plotly_chart(plot, use_container_width=True, theme="streamlit")
+    #  return_df = retirement_values(aggressive_values)
+    #  st.dataframe(return_df)
     if investor == 'Moderate':
       st.markdown("*Moderate investors want to grow their money without losing too much. Their goal is to weigh opportunities and risks and this investor's approach is sometimes described as a “balanced” strategy.*")
     if investor == 'Conservative':
       st.markdown('*Conservative investors are willing to accept little to no volatility in their investment portfolios. Retirees or those close to retirement are usually in this category.*')
     if investor == 'Nervous':
       st.markdown('*Nervous investors have financial anxiety and often react to the market. When the market drops, the nervous investor pulls their money out of the stock market, waiting to reinvest when returns remain positive.*')
+
+    if st.button("Predict my future"):
+      st.plotly_chart(plot, use_container_width=True, theme="streamlit")
+      return_df = retirement_values(aggressive_values)
+      st.dataframe(return_df)
 
 
 
@@ -74,11 +91,11 @@ def run():
 
     st.sidebar.success("Select a demo above.")
 
+    st.divider()
 
     st.markdown(
         """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
+        This retirement simulator is for entertainment purposes.
         **👈 Select a demo from the sidebar** to see some examples
         of what Streamlit can do!
         ### Want to learn more?

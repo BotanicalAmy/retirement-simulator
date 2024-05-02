@@ -3,7 +3,9 @@ import random
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import plotly.graph_objects as go
+import plotly.figure_factory as ff
+import streamlit as st
+
 #based on the rate distribution patterns, the negative counter function is only used for the aggressive return rates
 #function to calculate the percentage of negative return rates
 def negative_counter(list):
@@ -95,9 +97,9 @@ def retirement_forecast(investor, investment, years):
     future_value.set_index('Year', inplace=True)
     return future_value
 
-def retirement_plot(data, investor, investment):
+def retirement_plot(data, investment):
     #create a plot of the future values of the investment
-    fig = px.line(data.iloc[:, :5], title=f'Future Value of ${investment} Investment Portfolio',
+    fig = px.line(data.iloc[:, :5], title=f'Future Value of ${investment:,} Investment Portfolio',
                 #name the key for the legend
                 labels={'value':'Value of Investment', 'Year':'Year'},
                 width=900, height=500, markers=True)
@@ -108,14 +110,27 @@ def retirement_plot(data, investor, investment):
     #make the tooltip prettier
     fig.update_traces(mode='markers+lines', xhoverformat='%H:%M', yhoverformat=',.0f', hovertemplate='%{x}: %{y} <extra></extra>')
     fig.update_yaxes(tickprefix="$")
-    fig.show()
+    return fig
+
+def retirement_values(data):
     #print the highest and lowest investment value for the final year, in addition to the average return rate
-    final_year = data.index[-1]
-    highest_value = data.iloc[-1, :5].max()
-    lowest_value = data.iloc[-1, :5].min()
-    average_value = (highest_value + lowest_value)/2
+    final_year = str(data.index[-1])
+    highest_value = round(data.iloc[-1, :5].max())
+    highest_value_formatted = '${:,}'.format(highest_value)
+    lowest_value = round(data.iloc[-1, :5].min())
+    lowest_value_formatted = '${:,}'.format(lowest_value)
+    average_value = round((highest_value + lowest_value)/2)
+    average_value_formatted = '${:,}'.format(average_value)
     return_forecast = (data['Avg. Return'].mean())*100
-    print(f'The highest projected value in {final_year} is: ${highest_value:,.0f}')
-    print(f'The lowest projected value in {final_year} is: ${lowest_value:,.0f}')
-    print(f'The average projected value in {final_year} is: ${average_value:,.0f}')
-    print(f'The average return rate for the portfolio is: {return_forecast:.2f}%')
+    return_percent = '%{:.2f}'.format(return_forecast)
+    #put the final_year, highest_value, lowest_value, average_value and return_forecast into a dataframe
+    retirement_df = pd.DataFrame(np.column_stack([final_year, highest_value_formatted, lowest_value_formatted ,average_value_formatted, return_percent]),
+        columns=['Final Year', 'Highest Value', 'Lowest Value', 'Average Value', 'Avg. Return Rate'])
+    retirement_df.set_index('Final Year', inplace=True)
+
+    return retirement_df
+
+    # st.write((f'The highest projected value in {final_year} is ${highest_value:,.0f}'))
+    # st.write((f'The lowest projected value in {final_year} is ${lowest_value:,.0f}'))
+    # st.write((f'The average projected value in {final_year} is ${average_value:,.0f}'))
+    # st.write((f'The average return rate for the portfolio is {return_forecast:.2f}%'))
