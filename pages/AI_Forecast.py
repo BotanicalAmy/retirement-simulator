@@ -97,18 +97,6 @@ ai_forecast()
 
 st.divider()
 
-forecast_data = pd.read_csv('data/forecast_results.csv')
-forecast_data.drop('Unnamed: 0', axis=1, inplace=True)
+#add visual for forecast data
 
-st.write("Will be replaced with a nicer looking line chart created in Illustrator")
-
-
-#lineplot of the original forecast data to show affect of investor type on final value
-fig, ax = plt.subplots(figsize=(12,8))
-forecast_plot = sns.lineplot(data=forecast_data, x='Years Forecasted', y='Final Value', hue='Investor Type')
-plt.legend(title='Investor Type', loc='upper left', labels=['Aggressive', '', 'Nervous', '','Conservative','', 'Moderate',''])
-plt.title('Years Invested vs Final Portfolio Value by Investor Type')
-fig = forecast_plot.figure
-
-st.pyplot(fig)
 
