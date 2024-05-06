@@ -15,6 +15,7 @@ inputs = [[25, 250000, 0,1,0,0]]
 
 def retirement_prediction(pred_inputs):
     #convert the forecast_results csv file into a dataframe
+    
     forecast_results = pd.read_csv('data/forecast_results.csv')
     forecast_results.drop('Unnamed: 0', axis=1, inplace=True)
 
@@ -36,7 +37,6 @@ def retirement_prediction(pred_inputs):
     prediction = k_grid.predict(pred_inputs)
     return prediction
 
-    # print(f'The predicted final value of the portfolio is: ${prediction[0]:,.0f}')
 
 
 def IQR(dist):

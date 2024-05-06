@@ -71,22 +71,21 @@ def ai_forecast():
         if investor == 'Nervous':
           st.markdown('*Nervous investors have financial anxiety and often react to the market. When the market drops, the nervous investor pulls their money out of the stock market, waiting to reinvest when returns remain positive.*')
           investor_code = [0,0,0,1]
-
+        
         add_inputs = st.form_submit_button("Forecast your Future")
         if add_inputs and investment is not None:
-            input_list.append(years)
-            input_list.append(investment)
-            input_list.extend(investor_code)
             with st.sidebar:
-                # with st.spinner('Forecasting...'):
-                #     time.sleep(6)
-                # st.success('Done!')
-                with st.status("Forecasting your retirement...") as status:
+                with st.status("Forecasting your retirement...", expanded=True) as status:
                     st.write("Analyzing your inputs...")
                     time.sleep(2)
                     st.write("Making a prediction...")
-                    time.sleep(1)
+                    time.sleep(2)
+                    st.write("Preparing your forecast...")
+                    time.sleep(2)
                     status.update(label="Forecast complete!", state="complete", expanded=False)
+            input_list.append(years)
+            input_list.append(investment)
+            input_list.extend(investor_code)
             prediction = (retirement_prediction(ai_input))
             st.markdown(f'In **{years}** years, your investment is predicted to be worth **${prediction[0]:,.0f}**')
 
