@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 
 
 st.set_page_config(page_title="AI Forecast", page_icon="🧠")
-st.markdown("# Forecast your future with AI")
+st.markdown("# Forecast your future with AI 🪄")
 st.write("Predict retirement with AI")
 
 with st.sidebar:

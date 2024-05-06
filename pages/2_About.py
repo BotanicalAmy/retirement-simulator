@@ -24,7 +24,8 @@ import statistics as stat
 def about():
     st.write("In Progress")
     st.markdown("### Exploring the Data")
-  
+    st.write("Add some details")
+    
     future_returns = pd.read_csv('data/futurereturns.csv')
 
     statistics = {'Return Rates': ['S&P Future', 'Aggressive Future', 'Moderate Future', 'Conservative Future'],
@@ -41,13 +42,15 @@ def about():
     statistics_table['95% Conf'] = [confidence_interval(future_returns['S&P Future']), confidence_interval(future_returns['Aggressive Future']), confidence_interval(future_returns['Moderate Future']), confidence_interval(future_returns['Conservative Future'])]
     st.dataframe(statistics_table)
 
-    plt.hist(future_returns['S&P Future'], bins=50, alpha=0.7, color='#e9e9ee')
-    plt.hist(future_returns['Aggressive Future'], bins=50, alpha=0.7, color='#c7c2d6')
-    plt.hist(future_returns['Moderate Future'], bins=50, alpha=0.7, color='#787380')
-    plt.hist(future_returns['Conservative Future'], bins=50, alpha=0.7, color='#494351')
-    plt.legend(['S&P Future', 'Aggressive Future', 'Moderate Future', 'Conservative Future'])
 
-    st.pyplot(plt)
+    st.markdown("**Distribution of returns from the sampled data**")
+    st.write("Add some details")
+    st.image('images/futures_histogram.jpg')
+
+    st.write("**Performance trends with the AI model dataset**")
+    st.write("Add some details")
+    st.image('images/future_returns_trends.jpg')
+
 
 
 st.set_page_config(page_title="About the Retirement Simulator", page_icon="🐍")
