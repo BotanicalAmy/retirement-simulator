@@ -22,6 +22,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from page_elements import footer, side_content
 
 
 
@@ -93,7 +94,10 @@ def ai_forecast():
 
 ai_forecast()
 
-st.divider()
+with st.sidebar:
+      side_content()
+
+footer()
 
 #add visual for forecast data
 

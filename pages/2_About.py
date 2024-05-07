@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 from model import IQR, Q1, Q3, confidence_interval
 import numpy as np
 import statistics as stat
+from page_elements import footer, side_content
 
 
 def about():
@@ -57,14 +58,11 @@ st.set_page_config(page_title="About the Retirement Simulator", page_icon="🐍"
 st.markdown("# About the Retirement Simulator")
 
 with st.sidebar:
-    st.write("Add text and links")
+    side_content()
 
 
 about()
 
-st.divider()
-
-st.write(
-    """Created by [Denver Data Design](https://denverdatadesign.com/).""")
+footer()
 
 

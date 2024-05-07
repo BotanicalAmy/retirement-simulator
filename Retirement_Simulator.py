@@ -16,6 +16,7 @@ import streamlit as st
 from streamlit.logger import get_logger
 import pandas as pd
 from function import retirement_forecast, retirement_plot, retirement_values
+from page_elements import footer, side_content
 
 LOGGER = get_logger(__name__)
 
@@ -83,10 +84,11 @@ def run():
         st.plotly_chart(plot, use_container_width=True, theme="streamlit")
         return_df = retirement_values(values)
         st.dataframe(return_df)
+    
+    with st.sidebar:
+      side_content()
 
-    st.divider()
-    st.image('images/mountainbg.jpg')
-    st.write("""Created by [Denver Data Design](https://denverdatadesign.com/)""")
+    footer()
 
 
 if __name__ == "__main__":

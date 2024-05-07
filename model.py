@@ -4,7 +4,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
-from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -31,6 +30,7 @@ def retirement_prediction(pred_inputs):
     k_pipe = Pipeline(steps=[('scaler', StandardScaler()),
                     ('regression', KNeighborsRegressor())])
     k_grid = GridSearchCV(estimator=k_pipe, n_jobs=-1, param_grid={'regression__n_neighbors': [3, 5, 7, 9, 11], 'regression__metric': ['euclidean', 'minkowski','manhattan'], 'regression__weights': ['uniform', 'distance']})
+    #added values extension to clear feature name warning
     k_grid = k_grid.fit(X_train.values, y_train)
     # k_pred = k_grid.predict(X_test)
 
