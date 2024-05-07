@@ -33,7 +33,7 @@ def run():
         page_icon="💵",
     )
 
-    st.write("# Predict your financial future 🎲 ")
+    st.write("# Predict your financial future 🎲")
     st.markdown("### Welcome to my retirement forecaster ")
     st.write('The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Predict my Future" will create a series of five, hypothetical investment forecasts.')
 
