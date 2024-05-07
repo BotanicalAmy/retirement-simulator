@@ -31,7 +31,7 @@ def retirement_prediction(pred_inputs):
     k_pipe = Pipeline(steps=[('scaler', StandardScaler()),
                     ('regression', KNeighborsRegressor())])
     k_grid = GridSearchCV(estimator=k_pipe, n_jobs=-1, param_grid={'regression__n_neighbors': [3, 5, 7, 9, 11], 'regression__metric': ['euclidean', 'minkowski','manhattan'], 'regression__weights': ['uniform', 'distance']})
-    k_grid = k_grid.fit(X_train, y_train)
+    k_grid = k_grid.fit(X_train.values, y_train)
     # k_pred = k_grid.predict(X_test)
 
     prediction = k_grid.predict(pred_inputs)
