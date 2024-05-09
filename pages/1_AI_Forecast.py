@@ -13,17 +13,10 @@
 # limitations under the License.
 
 
-
-import numpy as np
 import streamlit as st
-import time
 from model import retirement_prediction
-import pandas as pd
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
 from page_elements import footer, side_content
-
+from datetime import datetime
 
 
 st.set_page_config(page_title="AI Forecast", page_icon="🧠")
@@ -78,17 +71,21 @@ def ai_forecast():
             with st.sidebar:
                 with st.status("Forecasting your retirement...", expanded=True) as status:
                     st.write("Analyzing your inputs...")
-                    time.sleep(2)
+                    input_list.append(years)
+                    input_list.append(investment)
+                    input_list.extend(investor_code)
+
                     st.write("Making a prediction...")
-                    time.sleep(2)
-                    st.write("Preparing your forecast...")
-                    time.sleep(2)
+                    prediction = (retirement_prediction(ai_input))
+
                     status.update(label="Forecast complete!", state="complete", expanded=False)
-            input_list.append(years)
-            input_list.append(investment)
-            input_list.extend(investor_code)
-            prediction = (retirement_prediction(ai_input))
+
+            annual_income = prediction * 0.04
+            monthly_income = annual_income/12
+            retirement_year = years + datetime.now().year
             st.markdown(f'In **{years}** years, your investment is predicted to be worth **${prediction[0]:,.0f}**')
+            st.markdown(f'Your annual retirement income is predicted to be **\${annual_income[0]:,.0f}**, which is **\${monthly_income[0]:,.0f}** per month.')
+            st.markdown(f'*The retirement income is based on a 4% annual withdrawl rate, beginning in {retirement_year}.*')
 
 
 

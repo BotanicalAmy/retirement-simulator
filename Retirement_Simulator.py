@@ -17,6 +17,7 @@ from streamlit.logger import get_logger
 import pandas as pd
 from function import retirement_forecast, retirement_plot, retirement_values
 from page_elements import footer, side_content
+from datetime import datetime
 
 LOGGER = get_logger(__name__)
 
@@ -28,7 +29,7 @@ moderate = {'moderate_investor': list(future_returns['Moderate Future'])}
 conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
 nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
 
-def run():
+def main():
     st.set_page_config(
         page_title="Retirement Simulator",
         page_icon="💵",
@@ -58,7 +59,7 @@ def run():
         years = st.slider('How many years will you invest?', 10, 50, 20, label_visibility="collapsed")
         st.write("I plan to invest for ", years, 'years')
       
-      submitted = st.form_submit_button("Predict my Future")
+      submitted = st.form_submit_button("Predict your Future")
       if submitted and investment is not None:
         st.write('You selected:', investor)
         if investor == 'Aggressive':
@@ -84,6 +85,9 @@ def run():
         st.plotly_chart(plot, use_container_width=True, theme="streamlit")
         return_df = retirement_values(values)
         st.dataframe(return_df)
+
+        retirement_year = years + datetime.now().year
+        st.markdown(f'*The retirement income is based on a 4% annual withdrawl rate, beginning in {retirement_year}.*')
     
     with st.sidebar:
       side_content()
@@ -92,4 +96,4 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    main()

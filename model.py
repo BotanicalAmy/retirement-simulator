@@ -10,8 +10,6 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 
 
-inputs = [[25, 250000, 0,1,0,0]]
-
 def retirement_prediction(pred_inputs):
     #convert the forecast_results csv file into a dataframe
     

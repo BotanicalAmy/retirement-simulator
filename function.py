@@ -121,9 +121,13 @@ def retirement_values(data):
     average_value_formatted = '${:,}'.format(average_value)
     return_forecast = (data['Avg. Return'].mean())*100
     return_percent = '%{:.2f}'.format(return_forecast)
+    annual_income = average_value * .04
+    annual_income_formatted = '${:,.0f}'.format(annual_income)
+    monthly_income = annual_income/12
+    monthly_income_formatted = '${:,.0f}'.format(monthly_income)
     #put the final_year, highest_value, lowest_value, average_value and return_forecast into a dataframe
-    retirement_df = pd.DataFrame(np.column_stack([final_year, highest_value_formatted, lowest_value_formatted ,average_value_formatted, return_percent]),
-        columns=['Final Year', 'Highest Value', 'Lowest Value', 'Average Value', 'Avg. Return Rate'])
+    retirement_df = pd.DataFrame(np.column_stack([final_year, highest_value_formatted, lowest_value_formatted ,average_value_formatted, return_percent, annual_income_formatted, monthly_income_formatted]),
+        columns=['Final Year', 'Highest Value', 'Lowest Value', 'Average Value', 'Avg. Return Rate', 'Annual Income', 'Monthly Income'])
     retirement_df.set_index('Final Year', inplace=True)
 
     return retirement_df

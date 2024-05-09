@@ -8,6 +8,8 @@ def footer():
     st.write("""Created by [Denver Data Design](https://denverdatadesign.com/) 
              | Follow Amy on [LinkedIn](https://www.linkedin.com/in/amy-folkestad-76873884/) 
              | See her work on [GitHub](https://github.com/BotanicalAmy)""")
+    st.markdown('''*The retirement predictions created by this application are for educational and enterainment purposes. 
+                While data science can deliver probable results, the future can never be forecasted with certainty.*''')
 
 def side_content():
     st.markdown('**Denver Data Design**')
