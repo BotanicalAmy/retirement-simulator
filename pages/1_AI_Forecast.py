@@ -21,11 +21,8 @@ from datetime import datetime
 
 st.set_page_config(page_title="AI Forecast", page_icon="🧠")
 st.markdown("# Forecast your future with AI 🪄")
-st.write("Predict retirement with AI")
-
-with st.sidebar:
-    st.write("The forecasting model analyzes 10,000 hypothetical returns.")
-    st.markdown("*Visit the about page to learn more.*")
+st.write("The machine learning model analyzes 10,000 hypothetical returns to develop a customized forecast.")
+st.markdown("####")
 
 
 def ai_forecast():
