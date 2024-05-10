@@ -27,10 +27,6 @@ moderate = {'moderate_investor': list(future_returns['Moderate Future'])}
 conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
 nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
 
-#create an empty income_summary dictionary
-income_summary = {'Final Year': [], 'Investor': [], 'Contribution':[], 'Initial Value':[], 
-                  'Future Value':[], 'Withdrawl':[],'Income':[], 'Monthly Inc.':[]}
-
 def planner():
     st.write("Add page content")
 
@@ -98,7 +94,7 @@ def planner():
         income_df.set_index('Final Year', inplace=True)
 
         #add values to income_summary dictionary
-        income_summary.update({'Final Year': final_year, 'Investor': investor, 'Contribution': '${:,}/yr'.format(contribution), 
+        income_summary =({'Final Year': final_year, 'Investor': investor, 'Contribution': '${:,}/yr'.format(contribution), 
                                'Initial Value': '${:,}'.format(investment), 'Future Value': '${:,.0f}'.format(future_value), 
                                'Withdrawl': '%{:.0f}'.format(withdrawl_rate*100), 'Income': '${:,}/yr'.format(annual_income), 
                                'Monthly Inc.': '${:,}/mo'.format(monthly_income)})
