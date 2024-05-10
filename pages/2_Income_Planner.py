@@ -27,9 +27,13 @@ moderate = {'moderate_investor': list(future_returns['Moderate Future'])}
 conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
 nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
 
+#create an empty income_summary dictionary
+income_summary = {'Final Year': [], 'Investor': [], 'Contribution':[], 'Initial Value':[], 
+                  'Future Value':[], 'Withdrawl':[],'Income':[], 'Monthly Inc.':[]}
 
 def planner():
     st.write("Add page content")
+
 
     with st.form("Select your retirement options", border = False):
       col1, col2 = st.columns(2, gap="medium")
@@ -84,31 +88,32 @@ def planner():
                 
         #make a pretty table of information
         final_year = str(years + datetime.now().year)
-        #get the average return from the income dataframe
-        average_return = (income['Avg. Return'].mean())*100
-        #round average return to two decimal places and add percent
-        return_percent = '%{:.2f}'.format(average_return)
         #get last row value of income['With Contribution]
-        future_value = (income['With Contribution'].tail(1))
+        future_value = income['With Contribution'].iloc[-1]
         annual_income = round(future_value * withdrawl_rate)
         monthly_income = round(annual_income/12)
         #add to the dataframe
-        income_df = pd.DataFrame(np.column_stack([final_year, return_percent, investor,future_value.map("${:,.0f}".format), annual_income.map("${:,.0f}".format), monthly_income.map("${:,.0f}".format)]),
-            columns=['Final Year', 'Avg. Return', 'Investor', 'Future Value', 'Annual Income', 'Monthly Income'])
+        income_df = pd.DataFrame(np.column_stack([final_year, investor, '${:,}/yr'.format(contribution), '${:,}'.format(investment), '${:,.0f}'.format(future_value), '%{:.0f}'.format(withdrawl_rate*100), '${:,}/yr'.format(annual_income), '${:,}/mo'.format(monthly_income)]),
+            columns=['Final Year', 'Investor', 'Contribution', 'Initial Value', 'Future Value', 'Withdrawl','Income', 'Monthly Inc.'])
         income_df.set_index('Final Year', inplace=True)
+
+        #add values to income_summary dictionary
+        income_summary.update({'Final Year': final_year, 'Investor': investor, 'Contribution': '${:,}/yr'.format(contribution), 
+                               'Initial Value': '${:,}'.format(investment), 'Future Value': '${:,.0f}'.format(future_value), 
+                               'Withdrawl': '%{:.0f}'.format(withdrawl_rate*100), 'Income': '${:,}/yr'.format(annual_income), 
+                               'Monthly Inc.': '${:,}/mo'.format(monthly_income)})
+        
 
         st.divider()
         #show just the last row of the dataframe
         st.markdown("### Retirement income plan:")
         st.dataframe(income_df)
+        #create dataframe from income summary dictionary
+        # st.write(income_summary)
+        # income_summary = summary_build
+        st.write(income_summary)
 
-        #try creating a building dictionary that is converted to a dataframe
-        # st.write("working on creating a dataframe that adds each row to the table")
-        # income_summary = [[final_year, return_percent, investor, future_value.map("${:,.0f}".format), annual_income.map("${:,.0f}".format), monthly_income.map("${:,.0f}".format)]]
-        # test_df = pd.DataFrame((),columns=['Final Year', 'Avg. Return', 'Investor', 'Future Value', 'Annual Income', 'Monthly Income'])
-        # test_df.set_index('Final Year', inplace=True)
-        # #add the income summary list to the test_df
-        # test_df.loc[-1] = [income_summary]
+
 
 
 
