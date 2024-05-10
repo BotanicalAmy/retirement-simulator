@@ -67,12 +67,11 @@ def ai_forecast():
         if add_inputs and investment is not None:
             with st.sidebar:
                 with st.status("Forecasting your retirement...", expanded=True) as status:
-                    st.write("Analyzing your inputs...")
                     input_list.append(years)
                     input_list.append(investment)
                     input_list.extend(investor_code)
 
-                    st.write("Making a prediction...")
+                    st.write("Analyzing your inputs...")
                     prediction = (retirement_prediction(ai_input))
 
                     status.update(label="Forecast complete!", state="complete", expanded=False)
