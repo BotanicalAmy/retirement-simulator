@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
+
 #based on the rate distribution patterns, the negative counter function is only used for the aggressive return rates
 #function to calculate the percentage of negative return rates
 def negative_counter(list):
@@ -23,14 +24,13 @@ def positive_change_counter(list):
     percent_pos_change = (pos_change_counter/len(list))*100
     return percent_pos_change
 
-
-#enter the investor type (aggressive, moderate, conservative or nervous), the initial investment, and the number of years to forecast
-def retirement_forecast(investor, investment, years):
+#function to sample return rates
+def rate_sampler(investor, years):
     forecast_rates = list(investor.values())[0]
     investor_type = list(investor.keys())[0]
     sample_count = 0
     forecast_samples = {}
-    forecast_df = [0,0]
+    rate_df = [0,0]
 
     #require the user to enter a minimum of 10 years
     if years < 10:
@@ -79,7 +79,14 @@ def retirement_forecast(investor, investment, years):
         else:
             pass
     #create dataframe from the dictionary
-    forecast_df = pd.DataFrame(forecast_samples)
+    rate_df = pd.DataFrame(forecast_samples)
+    return(rate_df)
+
+
+#enter the investor type (aggressive, moderate, conservative or nervous), the initial investment, and the number of years to forecast
+def retirement_forecast(investor, investment, years):
+    #use rate sample to create a dataframe of future return rates
+    forecast_df = rate_sampler(investor, years)
     #create  year column, starting with the current year and adding a year for each row
     forecast_df['Year'] = datetime.now().year + forecast_df.index
     forecast_df.set_index('Year', inplace=True)
@@ -94,6 +101,25 @@ def retirement_forecast(investor, investment, years):
     future_value['Year'] = forecast_df.index
     future_value.set_index('Year', inplace=True)
     return future_value
+
+def retirement_income(investor, investment, contribution, years):
+    #use the rate sampler to create a dataframe of future return rates
+    forecast_df = rate_sampler(investor, years)
+    #create  year column, starting with the current year and adding a year for each row
+    forecast_df['Year'] = datetime.now().year + forecast_df.index
+    forecast_df.set_index('Year', inplace=True)
+    #create a new dataframe that averages the 5 sample columns as one average return rate
+    income_df = forecast_df.copy()
+    #average the 5 samples
+    income_df['Avg. Return'] = forecast_df.mean(axis=1)
+    income_df.drop(columns=['Sample 1', 'Sample 2', 'Sample 3', 'Sample 4', 'Sample 5'], inplace=True)
+    #create a column that counts the number of years
+    year_count = (income_df.index - income_df.index[0])+1
+    #create columns to show the contribution total, the future value of the investment, and the future value with the contribution
+    income_df['Contribution']= contribution*year_count
+    income_df['Future Value'] = investment*(1 + income_df['Avg. Return']).cumprod()
+    income_df['With Contribution'] = (investment + income_df['Contribution'])*(1 + income_df['Avg. Return']).cumprod()
+    return income_df
 
 def retirement_plot(data, investment):
     #create a plot of the future values of the investment

@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import pandas as pd
 import streamlit as st
 from model import IQR, Q1, Q3, confidence_interval
