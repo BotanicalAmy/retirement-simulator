@@ -100,13 +100,16 @@ def planner():
                                'Monthly Inc.': '${:,}/mo'.format(monthly_income)})
         
 
+
         st.divider()
         #show just the last row of the dataframe
         st.markdown("### Retirement income plan:")
         st.dataframe(income_df)
-        #create dataframe from income summary dictionary
-        # st.write(income_summary)
-        # income_summary = summary_build
+
+        #create a dataframe of the income_summary
+        # income_summary = pd.DataFrame(income_summary, index=[0])
+        # income_summary.set_index('Final Year', inplace=True)
+
         st.write(income_summary)
 
 
