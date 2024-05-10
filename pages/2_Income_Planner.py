@@ -28,7 +28,7 @@ conservative = {'conservative_investor':list(future_returns['Conservative Future
 nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
 
 
-def income_planner():
+def planner():
     st.write("Add page content")
 
     with st.form("Select your retirement options", border = False):
@@ -119,6 +119,6 @@ with st.sidebar:
     side_content()
 
 
-income_planner()
+planner()
 
 footer()
