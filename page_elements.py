@@ -13,8 +13,9 @@ def footer():
 
 def side_content():
     st.markdown('**Denver Data Design**')
-    st.write("Add some information about my services?")
-    st.write("Create a link to a post about building a Streamlit app?")
+    st.markdown('''Amy in an analyst and IT generalist with over a decade of experience using pattern recognition to create innovative business solutions.
+                [Learn More](https://denverdatadesign.com/about-amy/)''')
+
     #adding space
     st.markdown('#')
     buy_me_flower = '''

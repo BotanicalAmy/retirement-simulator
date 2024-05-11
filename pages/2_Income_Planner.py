@@ -129,6 +129,7 @@ st.set_page_config(page_title="Retirement Income Planner", page_icon="🗒️")
 st.markdown("# Retirement Income Planner 🗒️")
 
 with st.sidebar:
+    st.markdown("*A retirement plan data table will build as varying options are selected.*")
     if st.button("Reset the Data"):
         st.session_state.value = "Reset the Data"
         st.rerun()
