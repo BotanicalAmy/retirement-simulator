@@ -17,7 +17,7 @@ import streamlit as st
 from model import IQR, Q1, Q3, confidence_interval
 import numpy as np
 import statistics as stat
-from page_elements import footer, side_content
+from page_elements import footer, side_content, V_SPACE
 
 
 def about():
@@ -47,7 +47,7 @@ def about():
     st.markdown('''A python function was created to sample data from actual stock market returns. This repeated sampling effort was used to create
                 a set of return rate distributions for the forecasting functions. Below, the statistics of each dataset are
                 included to show the value ranges of each category of return rates.''')
-    st.markdown("##")
+    V_SPACE(1)
 
     future_returns = pd.read_csv('data/futurereturns.csv')
 
