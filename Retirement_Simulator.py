@@ -16,7 +16,7 @@ import streamlit as st
 from streamlit.logger import get_logger
 import pandas as pd
 from function import retirement_forecast, retirement_plot, retirement_values
-from page_elements import footer, side_content
+from page_elements import footer, side_content, V_SPACE
 from datetime import datetime
 
 LOGGER = get_logger(__name__)
@@ -36,7 +36,7 @@ def main():
     )
 
     st.write("# Predict your financial future 🎲")
-    st.markdown("### Welcome to my retirement forecaster ")
+    V_SPACE(1)
     st.write('The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Predict my Future" will create a series of five, hypothetical investment forecasts.')
 
     with st.form("Select your retirement options", border = False):

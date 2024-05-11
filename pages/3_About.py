@@ -39,7 +39,7 @@ def about():
 
     with col3:
         st.markdown("**Income Planner**")
-        st.markdown("Develop a retirement income plan, based on an interactive data table")
+        st.markdown("Develop a retirement income plan, build a dataset of investment options")
 
     st.divider()
     

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import streamlit as st
-from page_elements import footer, side_content
+from page_elements import footer, side_content, V_SPACE
 from function import retirement_income
 import pandas as pd
 import numpy as np
@@ -63,7 +63,9 @@ def planner():
             st.markdown('**How long will you invest?**')
             years = st.slider('How many years will you invest?', 10, 50, 20, label_visibility="collapsed")
             st.write("I plan to invest for ", years, 'years')
-            st.markdown('##')
+
+            #add vertical space
+            V_SPACE(1)
             #select retirement withrawl rate
             st.markdown('**Select a retirement withdrawl rate**')
             percent = st.radio('Percent withdrawl',['3%', '4% *~recommended*', '5%', '6%'], index=1, label_visibility="collapsed")

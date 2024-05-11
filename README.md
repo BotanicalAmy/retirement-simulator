@@ -1,7 +1,5 @@
-# Welcome to streamlit
+# Welcome to my Retirement Simulator Application
 
-This is the app you get when you run `streamlit hello`, extracted as its own app.
+I will be updating the ReadMe file soon, including linking to a post about best practices when creating a Streamlit based app.
 
-Edit [Hello.py](./Hello.py) to customize this app to your heart's desire. ❤️
-
-Check it out on [Streamlit Community Cloud](https://st-hello-app.streamlit.app/)
+Visit [Denver Data Design](https://denverdatadesign.com/)
