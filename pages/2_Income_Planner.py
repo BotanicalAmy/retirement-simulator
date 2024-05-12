@@ -40,8 +40,6 @@ monthly_li = []
 #fragment needed to isolate the planner functioning and prevent the lists from resetting
 @st.experimental_fragment()
 def planner():
-    st.markdown('''Experiment with different retirement scenarios to plan for your future. The forecasts below are created from the probability based
-                retirement simulator. *Final values will vary based on each randomized draw from the return distributions*.''')
 
     with st.form("Select your retirement options", border = False):
         col1, col2 = st.columns(2, gap="medium")
@@ -129,6 +127,8 @@ def planner():
 
 st.set_page_config(page_title="Retirement Income Planner", page_icon="🗒️")
 st.markdown("# Retirement Income Planner 🗒️")
+st.markdown('''Experiment with different retirement scenarios to plan for your future. The forecasts below are created from the probability based
+                retirement simulator. *Final values will vary based on each randomized draw from the return distributions*.''')
 
 with st.sidebar:
     st.markdown("*A retirement plan data table will build as varying options are selected.*")
