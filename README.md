@@ -4,9 +4,7 @@ The retirement simulator app was inspired by an Excel based retirement income pl
 to have a data science application capable of visualizing various retirement options. Specifically, the financial planners benefited from a retirement simulation
 model that visualized the effect of nervous investors, those who pull out of the stock market during a down year.
 
-As an analyst and math enthusiast, I enjoyed applying sequences and probability theory into the methods used for this data application. I have a passion for integrating my
-experience in front end development and UX design into data science applications. Math is the language of problem solving,  and my creative and artistic skills serve as a 
-transator for analytical methods.
+As an analyst and math enthusiast, I enjoyed applying sequences and probability theory into the methods used for this data application. For this particular project, I enjoyed integrating my experience in front end development and UX design to create an interactive data solution fro retirement investing. Math is the language of problem solving and art is the creative tool for bringing analytical solutions into action.
 
 I hope you enjoyed this project. For developers hoping to learn more, visit my website for tips on how to [get started with Streamlit](https://denverdatadesign.com/).
 
