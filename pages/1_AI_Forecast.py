@@ -21,7 +21,6 @@ from datetime import datetime
 
 st.set_page_config(page_title="AI Forecast", page_icon="🧠")
 st.markdown("# Forecast your future with AI 🪄")
-#adds vertical space below page heading
 V_SPACE(1)
 st.write("The machine learning model analyzes 10,000 hypothetical returns to develop a customized forecast.")
 
