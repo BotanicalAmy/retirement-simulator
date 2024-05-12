@@ -44,7 +44,7 @@ def about():
     st.divider()
     
     st.markdown("### Exploring the Data")
-    st.markdown('''A python function was created to sample data from actual stock market returns. This repeated sampling effort was used to create
+    st.markdown('''A python function was created to sample data from historical stock market returns. A repeated sampling method was used to create
                 a set of return rate distributions for the forecasting functions. Below, the statistics of each dataset are
                 included to show the value ranges of each category of return rates.''')
     V_SPACE(1)
@@ -67,17 +67,17 @@ def about():
 
 
     st.markdown("**Distribution of returns from the sampled data**")
-    st.markdown('''The histogram below visualizes the statistics detailed above. Note that the wider the ranges of values in the 95\% 
-                confidence range are reflected in a wider the probability curve.''')
+    st.markdown('''The histogram below visualizes the statistics detailed above. Note that a wider the range of values in the 95\% 
+                confidence range is reflected in a wider probability curve.''')
     st.image('images/futures_histogram.jpg')
 
     st.markdown("### Creating the AI Model")
-    st.markdown('''After the initial distribution of return rates were created, a python function was written to model the patterns of historical
-                stock market returns. This function was then programmed to create a sample of 10,000 hypothetical returns. This dataset was
-                used to train a series of predictive models. The KNN model had the best performance and was therefore utilized in the final
+    st.markdown('''After developing a large distribution of return rates, a python function was written to model the patterns of historical
+                stock market returns. A set of 10,000 hypothetical returns was generated from this function to create a dataset for the
+                predictive models. For the machine learning process, the KNN model had the best performance and was therefore utilized in the final
                 data application.''')
     st.markdown('''To learn more about the mathematical modeling behind this data app, check out the [Jupyter
-                Notebook](https://github.com/BotanicalAmy/Retirement-Forecaster) used for my research and modeling. ''')
+                Notebook](https://github.com/BotanicalAmy/Retirement-Forecaster) used for the development process. ''')
 
     st.markdown("#### Performance trends with the AI model dataset")
     st.markdown('''This retirement simulator was inspired by a business use case for a local wealth management firm. As advisors, 
