@@ -8,8 +8,6 @@ As an analyst and math enthusiast, I enjoyed applying sequences and probability 
 experience in front end development and UX design into data science applications. Math is the language of problem solving,  and my creative and artistic skills serve as a 
 transator for analytical methods.
 
-I hope you enjoyed this project. For developers hoping to learn more, visit my website for tips on how to get started with Streamlit.
+I hope you enjoyed this project. For developers hoping to learn more, visit my website for tips on how to get [started with Streamlit](https://denverdatadesign.com/).
 
-Visit [Denver Data Design](https://denverdatadesign.com/)
-
-Learn about the mathematical models behind this application: [Retirement Data Investigation](https://github.com/BotanicalAmy/Retirement-Forecaster)
+Learn about the [mathematical models](https://github.com/BotanicalAmy/Retirement-Forecaster) behind this application
