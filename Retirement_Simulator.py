@@ -37,7 +37,8 @@ def main():
 
     st.write("# Predict your financial future 🎲")
     V_SPACE(1)
-    st.write('The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Predict my Future" will create a series of five, hypothetical investment forecasts.')
+    st.markdown('''The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Predict my Future" will 
+                create a series of five, hypothetical investment forecasts. *Final values will vary based on each randomized draw from the return distributions*.''')
 
     with st.form("Select your retirement options", border = False):
       col1, col2 = st.columns(2, gap="medium")
