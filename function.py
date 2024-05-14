@@ -49,7 +49,7 @@ def rate_sampler(investor, years):
                     pass
                 else:
                     agg_rates = rates.copy() 
-                    column_name = 'Sample ' + str(sample_count+1)
+                    column_name = 'Scenario ' + str(sample_count+1)
                     forecast_samples[column_name] = agg_rates
                     sample_count += 1
             #creating nervous investor, zero rates signify pulling out of the market
@@ -66,13 +66,13 @@ def rate_sampler(investor, years):
                             nervous_rates[i+2] = 0
                             nervous_rates[i+3] = 0
                     zero_rates = nervous_rates
-                    column_name = 'Sample ' + str(sample_count+1)
+                    column_name = 'Scenario ' + str(sample_count+1)
                     forecast_samples[column_name] = zero_rates
                     sample_count += 1
             #conservative or moderate investor
             if investor_type == 'conservative_investor' or investor_type == 'moderate_investor':
                 con_mod_rates = rates.copy()
-                column_name = 'Sample ' + str(sample_count+1)
+                column_name = 'Scenario ' + str(sample_count+1)
                 forecast_samples[column_name] = con_mod_rates
                 sample_count += 1
             else:
@@ -96,7 +96,7 @@ def retirement_forecast(investor, investment, years):
     #create a new dataframe to hold the future value of the investment  
     future_value = pd.DataFrame()   
     for f in range(5):
-        future_value['Sample ' + str(f+1)] = initial_investment*(1 + forecast_df['Sample ' + str(f+1)]).cumprod()
+        future_value['Scenario ' + str(f+1)] = initial_investment*(1 + forecast_df['Scenario ' + str(f+1)]).cumprod()
     #create a column that shows the average return for each year
     future_value['Avg. Return'] = forecast_df.mean(axis=1)
     future_value['Year'] = forecast_df.index
@@ -113,7 +113,7 @@ def retirement_income(investor, investment, contribution, years):
     income_df = forecast_df.copy()
     #average the 5 samples
     income_df['Avg. Return'] = forecast_df.mean(axis=1)
-    income_df.drop(columns=['Sample 1', 'Sample 2', 'Sample 3', 'Sample 4', 'Sample 5'], inplace=True)
+    income_df.drop(columns=['Scenario 1', 'Scenario 2', 'Scenario 3', 'Scenario 4', 'Scenario 5'], inplace=True)
     #create a column that counts the number of years
     year_count = (income_df.index - income_df.index[0])+1
     #create columns to show the contribution total, the future value of the investment, and the future value with the contribution
@@ -147,7 +147,7 @@ def retirement_values(data):
     average_value = round((highest_value + lowest_value)/2)
     average_value_formatted = '${:,}'.format(average_value)
     return_forecast = (data['Avg. Return'].mean())*100
-    return_percent = '%{:.2f}'.format(return_forecast)
+    return_percent = '{:.2f}%'.format(return_forecast)
     annual_income = average_value * .04
     annual_income_formatted = '${:,.0f}'.format(annual_income)
     monthly_income = annual_income/12

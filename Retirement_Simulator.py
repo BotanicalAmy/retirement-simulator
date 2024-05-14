@@ -35,10 +35,10 @@ def main():
         page_icon="💵",
     )
 
-    st.write("# Predict your financial future 🎲")
+    st.write("# Forecast your financial future 🎲")
     V_SPACE(1)
-    st.markdown('''The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Predict my Future" will 
-                create a series of five, hypothetical investment forecasts. *Final values will vary based on each randomized draw from the return distributions*.''')
+    st.markdown('''The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Forecast your Future" will 
+                create a series of five, hypothetical investment scenarios. *Final values will vary based on each randomized draw from the return distributions*.''')
 
     with st.form("Select your retirement options", border = False):
       col1, col2 = st.columns(2, gap="medium")
@@ -60,7 +60,7 @@ def main():
         years = st.slider('How many years will you invest?', 10, 50, 20, label_visibility="collapsed")
         st.write("I plan to invest for ", years, 'years')
       
-      submitted = st.form_submit_button("Predict your Future")
+      submitted = st.form_submit_button("Forecast your Future")
       if submitted and investment is not None:
         st.write('You selected:', investor)
         if investor == 'Aggressive':

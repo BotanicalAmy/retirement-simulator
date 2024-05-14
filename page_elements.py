@@ -9,7 +9,7 @@ def footer():
              | Follow Amy on [LinkedIn](https://www.linkedin.com/in/amy-folkestad-76873884/) 
              | See her work on [GitHub](https://github.com/BotanicalAmy)""")
     st.markdown('''*The retirement predictions created by this application are for educational and enterainment purposes. 
-                While data science can deliver probable results, the future can never be forecasted with certainty.*''')
+                While data science can deliver probable results, past performance is not indicative of future returns.*''')
 
 def V_SPACE(lines):
     for _ in range(lines):

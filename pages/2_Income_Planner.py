@@ -66,10 +66,10 @@ def planner():
             V_SPACE(1)
             #select retirement withrawl rate
             st.markdown('**Select a retirement withdrawl rate**')
-            percent = st.radio('Percent withdrawl',['3%', '4% *~recommended*', '5%', '6%'], index=1, label_visibility="collapsed")
+            percent = st.radio('Percent withdrawl',['3%', '4%', '5%', '6%'], index=1, label_visibility="collapsed")
             if percent == '3%':
                 withdrawl_rate = 0.03
-            if percent == '4% *~recommended*':
+            if percent == '4%':
                 withdrawl_rate = 0.04
             if percent == '5%':
                 withdrawl_rate = 0.05
@@ -104,7 +104,7 @@ def planner():
             contribution_li.append('${:,}/yr'.format(contribution))
             initial_value_li.append('${:,}'.format(investment))
             future_value_li.append('${:,.0f}'.format(future_value))
-            withrdawl_li.append('%{:.0f}'.format(withdrawl_rate*100))
+            withrdawl_li.append('{:.0f}%'.format(withdrawl_rate*100))
             income_li.append('${:,}'.format(annual_income))
             monthly_li.append('${:,}'.format(monthly_income))
             
