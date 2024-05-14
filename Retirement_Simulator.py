@@ -47,6 +47,7 @@ def main():
         #select starting investment value
         st.markdown('**What is your initial investment?**')
         investment = st.number_input(label="Enter your initial investment", label_visibility="collapsed", value=None, placeholder='Type a number...', min_value=10000)
+        #streamlit limitations do not allow the addition of commas to the number input
         st.write('The initial investment is $',investment)
 
         #select investor type
