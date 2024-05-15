@@ -90,6 +90,7 @@ def main():
 
         retirement_year = years + datetime.now().year
         st.markdown(f'*The retirement income is based on a 4% annual withdrawl rate, beginning in {retirement_year}.*')
+        st.markdown('''The return rate  the [Geometric Mean](https://analystprep.com/cfa-level-1-exam/quantitative-methods/arithmetic-return-vs-geometric-return/)''')
     
     with st.sidebar:
       side_content()

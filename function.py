@@ -83,6 +83,12 @@ def rate_sampler(investor, years):
     rate_df = pd.DataFrame(forecast_samples)
     return(rate_df)
 
+#function to calculate the geometric mean of the return rates
+def geometric_mean(df):
+    geometric_return = ((df['Geometric Return'].prod())**(1/len(df)) -1)*100
+    return geometric_return
+
+
 
 #enter the investor type (aggressive, moderate, conservative or nervous), the initial investment, and the number of years to forecast
 def retirement_forecast(investor, investment, years):
@@ -99,6 +105,8 @@ def retirement_forecast(investor, investment, years):
         future_value['Scenario ' + str(f+1)] = initial_investment*(1 + forecast_df['Scenario ' + str(f+1)]).cumprod()
     #create a column that shows the average return for each year
     future_value['Avg. Return'] = forecast_df.mean(axis=1)
+    #adding geometric return
+    future_value['Geometric Return'] = (future_value['Avg. Return'] + 1)
     future_value['Year'] = forecast_df.index
     future_value.set_index('Year', inplace=True)
     return future_value
@@ -113,6 +121,8 @@ def retirement_income(investor, investment, contribution, years):
     income_df = forecast_df.copy()
     #average the 5 samples
     income_df['Avg. Return'] = forecast_df.mean(axis=1)
+    #adding geometric return
+    income_df['Geometric Return'] = (income_df['Avg. Return'] + 1)
     income_df.drop(columns=['Scenario 1', 'Scenario 2', 'Scenario 3', 'Scenario 4', 'Scenario 5'], inplace=True)
     #create a column that counts the number of years
     year_count = (income_df.index - income_df.index[0])+1
@@ -126,7 +136,7 @@ def retirement_plot(data, investment):
     #create a plot of the future values of the investment
     fig = px.line(data.iloc[:, :5], title=f'Future Value of ${investment:,} Investment Portfolio',
                 #name the key for the legend
-                labels={'value':'Value of Investment', 'Year':'Year'},
+                labels={'value':'Value of Portfolio', 'Year':'Year'},
                 width=900, height=500, markers=True)
     fig.update_layout(
         legend_title="Predicted Returns",
@@ -146,15 +156,17 @@ def retirement_values(data):
     lowest_value_formatted = '${:,}'.format(lowest_value)
     average_value = round((highest_value + lowest_value)/2)
     average_value_formatted = '${:,}'.format(average_value)
-    return_forecast = (data['Avg. Return'].mean())*100
-    return_percent = '{:.2f}%'.format(return_forecast)
+    # return_forecast = (data['Avg. Return'].mean())*100
+    # return_percent = '{:.2f}%'.format(return_forecast)
+    geometric = geometric_mean(data)
+    geometric_percent = '{:.2f}%'.format(geometric)
     annual_income = average_value * .04
     annual_income_formatted = '${:,.0f}'.format(annual_income)
     monthly_income = annual_income/12
     monthly_income_formatted = '${:,.0f}'.format(monthly_income)
     #put the final_year, highest_value, lowest_value, average_value and return_forecast into a dataframe
-    retirement_df = pd.DataFrame(np.column_stack([final_year, highest_value_formatted, lowest_value_formatted ,average_value_formatted, return_percent, annual_income_formatted, monthly_income_formatted]),
-        columns=['Final Year', 'Highest Value', 'Lowest Value', 'Average Value', 'Avg. Return Rate', 'Annual Income', 'Monthly Income'])
+    retirement_df = pd.DataFrame(np.column_stack([final_year, highest_value_formatted, lowest_value_formatted ,average_value_formatted, geometric_percent, annual_income_formatted, monthly_income_formatted]),
+        columns=['Final Year', 'Highest Value', 'Lowest Value', 'Average Value', 'Return Rate', 'Annual Income', 'Monthly Income'])
     retirement_df.set_index('Final Year', inplace=True)
 
     return retirement_df
