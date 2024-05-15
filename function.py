@@ -89,7 +89,6 @@ def geometric_mean(df):
     return geometric_return
 
 
-
 #enter the investor type (aggressive, moderate, conservative or nervous), the initial investment, and the number of years to forecast
 def retirement_forecast(investor, investment, years):
     #use rate sample to create a dataframe of future return rates
