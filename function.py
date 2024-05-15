@@ -135,7 +135,7 @@ def retirement_plot(data, investment):
     #create a plot of the future values of the investment
     fig = px.line(data.iloc[:, :5], title=f'Future Value of ${investment:,} Investment Portfolio',
                 #name the key for the legend
-                labels={'value':'Value of Portfolio', 'Year':'Year'},
+                labels={'value':'Portfolio Value', 'Year':'Year'},
                 width=900, height=500, markers=True)
     fig.update_layout(
         legend_title="Predicted Returns",
