@@ -82,7 +82,7 @@ def ai_forecast():
             st.markdown(f'In **{years}** years, your investment is predicted to be worth **${prediction[0]:,.0f}**')
             st.markdown(f'Your annual retirement income is predicted to be **\${annual_income[0]:,.0f}**, which is **\${monthly_income[0]:,.0f}** per month.')
             st.markdown(f'*The retirement income is based on a 4% annual withdrawl rate, beginning in {retirement_year}.*')
-
+    footer()
 
 
 ai_forecast()
@@ -90,8 +90,6 @@ ai_forecast()
 with st.sidebar:
       side_content()
 
-footer()
 
-#add visual for forecast data
 
 

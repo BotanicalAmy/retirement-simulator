@@ -122,6 +122,7 @@ def planner():
             income_summary_df = pd.DataFrame.from_dict(income_summary)
             income_summary_df.set_index('Final Year', inplace=True)
             st.dataframe(income_summary_df)
+    footer()
 
 
 
@@ -141,5 +142,3 @@ with st.sidebar:
 
 
 planner()
-
-footer()

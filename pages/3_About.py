@@ -87,9 +87,10 @@ def about():
     st.markdown('''Below is a visualization of the performance of the 10,000 sample retirement dataset. Despite being invested similar
                 to the aggressive investors, the nervous investors ended up with the worst portfolio performance trends.''')
     st.image('images/future_returns_trends.jpg')
+    footer()
 
 
-
+#page title and sidebar content
 st.set_page_config(page_title="About the Retirement Simulator", page_icon="🐍")
 st.markdown("# About the Retirement Simulator")
 
@@ -98,7 +99,5 @@ with st.sidebar:
 
 
 about()
-
-footer()
 
 

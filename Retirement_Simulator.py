@@ -30,11 +30,6 @@ conservative = {'conservative_investor':list(future_returns['Conservative Future
 nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
 
 def main():
-    st.set_page_config(
-        page_title="Retirement Simulator",
-        page_icon="💵",
-    )
-
     st.write("# Forecast your financial future 🎲")
     V_SPACE(1)
     st.markdown('''The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Forecast your Future" will 
@@ -91,12 +86,16 @@ def main():
         retirement_year = years + datetime.now().year
         st.markdown(f'*The retirement income is based on a 4% annual withdrawl rate, beginning in {retirement_year}.*')
         st.markdown('''The return rate uses the [Geometric Mean](https://analystprep.com/cfa-level-1-exam/quantitative-methods/arithmetic-return-vs-geometric-return/).''')
-    
-    with st.sidebar:
-      side_content()
 
     footer()
 
+#add page title and sidebar 
+st.set_page_config(
+page_title="Retirement Simulator",
+page_icon="💵",
+)
+with st.sidebar:
+  side_content()
 
 if __name__ == "__main__":
     main()
