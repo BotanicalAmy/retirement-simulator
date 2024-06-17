@@ -40,7 +40,7 @@ def main():
     st.markdown('''The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Forecast your Future" will 
                 create a series of five, hypothetical investment scenarios. *Final values will vary based on each randomized draw from the return distributions*.''')
 
-    with st.form("Select your retirement options", border = False):
+    with st.form("Select your retirement options", border=False):
       col1, col2 = st.columns(2, gap="medium")
 
       with col1:
