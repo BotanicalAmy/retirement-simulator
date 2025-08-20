@@ -17,7 +17,7 @@ def V_SPACE(lines):
 
 def side_content():
     st.markdown('**Denver Data Design**')
-    st.markdown('''Amy in an analyst and IT generalist with over a decade of experience using pattern recognition to create innovative business solutions.
+    st.markdown('''Amy is an analytics leader and IT generalist with over a decade of experience using pattern recognition to create innovative business solutions.
                 [Learn More](https://denverdatadesign.com/about-amy/)''')
 
     #adding space
