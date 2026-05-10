@@ -38,9 +38,9 @@ The scenarios are averaged to produce a single projected outcome, giving a more 
             'Prioritize capital preservation, accepting lower returns for reduced risk.',
         ],
         'Avg Return Rate': [
-            f"{np.mean(future_returns_preview['Aggressive Future']) * 100:.1f}%",
-            f"{np.mean(future_returns_preview['Moderate Future']) * 100:.1f}%",
-            f"{np.mean(future_returns_preview['Conservative Future']) * 100:.1f}%",
+            f"{(np.exp(np.mean(np.log(1 + future_returns_preview['Aggressive Future']))) - 1) * 100:.1f}%",
+            f"{(np.exp(np.mean(np.log(1 + future_returns_preview['Moderate Future']))) - 1) * 100:.1f}%",
+            f"{(np.exp(np.mean(np.log(1 + future_returns_preview['Conservative Future']))) - 1) * 100:.1f}%",
         ],
     })
     st.dataframe(investor_types, hide_index=True, use_container_width=True)
