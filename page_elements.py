@@ -119,10 +119,10 @@ def side_content():
 }}
 .logo-link-overlay {{
     position: fixed;
-    top: 0;
+    top: 55px;
     left: 0;
     width: 22rem;
-    height: 170px;
+    height: 150px;
     z-index: 1000;
     display: block;
     cursor: pointer;
