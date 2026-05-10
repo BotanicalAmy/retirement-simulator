@@ -179,7 +179,7 @@ investors. A sample could theoretically contain many more down years as long as 
 
 **Version 1.1**
 Removed the previous KNN model option, relying entirely on constrained statistical sampling and a supplemental random component for short term investors.
-Added the Retirement Explorer and Financial Design pages, updated branding, and improved the user interface.
+Added the Retirement Explorer, updated branding, and improved the user interface.
                                 
 **Version 1.0**
 Original release, built as a final project for the AI and Machine Learning course at UC Berkeley.
