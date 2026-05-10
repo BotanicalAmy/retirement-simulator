@@ -16,7 +16,7 @@ import streamlit as st
 from streamlit.logger import get_logger
 import pandas as pd
 from function import retirement_forecast, retirement_plot, retirement_values
-from page_elements import footer, side_content, V_SPACE
+from page_elements import footer, side_content, V_SPACE, retirement_inputs
 from datetime import datetime
 
 LOGGER = get_logger(__name__)
@@ -27,65 +27,75 @@ future_returns = pd.read_csv('data/futurereturns.csv')
 aggressive = {'aggressive_investor':list(future_returns['Aggressive Future'])}
 moderate = {'moderate_investor': list(future_returns['Moderate Future'])}
 conservative = {'conservative_investor':list(future_returns['Conservative Future'])}
-nervous = {'nervous_investor':list(future_returns['Aggressive Future'])}
+investor_descriptions = {
+    'Aggressive': '*Aggressive investors have a high risk tolerance and are willing to risk more money for the possibility of better, yet unknown, returns.*',
+    'Moderate': '*Moderate investors want to grow their money without losing too much. Their goal is to weigh opportunities and risks and this investor\'s approach is sometimes described as a balanced strategy.*',
+    'Conservative': '*Conservative investors are willing to accept little to no volatility in their investment portfolios. Retirees or those close to retirement are usually in this category.*',
+}
+
+investor_returns = {
+    'Aggressive': aggressive,
+    'Moderate': moderate,
+    'Conservative': conservative,
+}
 
 def main():
+    if 'summary_rows' not in st.session_state:
+        st.session_state.summary_rows = []
+    if 'sim_results' not in st.session_state:
+        st.session_state.sim_results = None
+
     st.write("# Forecast your financial future 🎲")
-    V_SPACE(1)
-    st.markdown('''The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Forecast your Future" will 
+    st.markdown('''The provided simulator uses historical returns to create a series of probable investment outcomes. Each selection of "Forecast your Future" will
                 create a series of five, hypothetical investment scenarios. *Final values will vary based on each randomized draw from the return distributions*.''')
 
-    with st.form("Select your retirement options", border = False):
-      col1, col2 = st.columns(2, gap="medium")
+    investment, contribution, investor, years, percent, withdrawl_rate, forecast_clicked = retirement_inputs()
 
-      with col1:
-        #select starting investment value
-        st.markdown('**What is your initial investment?**')
-        investment = st.number_input(label="Enter your initial investment", label_visibility="collapsed", value=None, placeholder='Type a number...', min_value=10000)
-        #streamlit limitations do not allow the addition of commas to the number input
-        st.write('The initial investment is $',investment)
-
-        #select investor type
-        st.markdown('**What type of investor are you?**')
-        investor = st.selectbox('What type of investor are you?',
-        ('Moderate', 'Aggressive','Conservative', 'Nervous'), label_visibility="collapsed")
-
-      with col2:
-        #select the number of years to forecast
-        st.markdown('**How long will you invest?**')
-        years = st.slider('How many years will you invest?', 10, 50, 20, label_visibility="collapsed")
-        st.write("I plan to invest for ", years, 'years')
-      
-      submitted = st.form_submit_button("Forecast your Future")
-      if submitted and investment is not None:
-        st.write('You selected:', investor)
-        if investor == 'Aggressive':
-          st.markdown('*Aggressive investors have a high risk tolerance and are willing to risk more money for the possibility of better, yet unknown, returns.*')
-          values = retirement_forecast(aggressive, investment, years)
-          plot = retirement_plot(values, investment)
-
-        if investor == 'Moderate':
-          st.markdown("*Moderate investors want to grow their money without losing too much. Their goal is to weigh opportunities and risks and this investor's approach is sometimes described as a “balanced” strategy.*")
-          values = retirement_forecast(moderate, investment, years)
-          plot = retirement_plot(values, investment)
-
-        if investor == 'Conservative':
-          st.markdown('*Conservative investors are willing to accept little to no volatility in their investment portfolios. Retirees or those close to retirement are usually in this category.*')
-          values = retirement_forecast(conservative, investment, years)
-          plot = retirement_plot(values, investment)
-
-        if investor == 'Nervous':
-          st.markdown('*Nervous investors have financial anxiety and often react to the market. When the market drops, the nervous investor pulls their money out of the stock market, waiting to reinvest when returns remain positive.*')
-          values = retirement_forecast(nervous, investment, years)
-          plot = retirement_plot(values, investment)
-
-        st.plotly_chart(plot, use_container_width=True, theme="streamlit")
-        return_df = retirement_values(values)
-        st.dataframe(return_df)
-
+    if forecast_clicked and investment is not None:
+        values = retirement_forecast(investor_returns[investor], investment, years, contribution)
+        projected_value = values.iloc[-1, :5].mean()
+        monthly_income = (projected_value * withdrawl_rate) / 12
         retirement_year = years + datetime.now().year
-        st.markdown(f'*The retirement income is based on a 4% annual withdrawl rate, beginning in {retirement_year}.*')
+
+        return_df = retirement_values(values, withdrawl_rate)
+        row = return_df.reset_index().iloc[0].to_dict()
+        row['Investor'] = investor
+        row['Initial Inv.'] = '${:,}'.format(investment)
+        row['Contribution'] = '${:,}/yr'.format(contribution)
+        st.session_state.summary_rows.append(row)
+
+        st.session_state.sim_results = {
+            'values': values,
+            'investment': investment,
+            'contribution': contribution,
+            'projected_value': projected_value,
+            'monthly_income': monthly_income,
+            'years': years,
+            'percent': percent,
+            'retirement_year': retirement_year,
+            'investor': investor,
+        }
+
+    if st.session_state.sim_results:
+        r = st.session_state.sim_results
+        st.markdown(investor_descriptions[r['investor']])
+        st.markdown(
+            f'<div style="background-color:#e2e8f7;border:1px solid #c7c2d6;border-radius:4px;padding:12px;margin-bottom:12px">'
+            f'In <b>{r["years"]}</b> years, your portfolio is projected to be worth <b>&#36;{r["projected_value"]:,.0f}</b> and will provide a monthly income of <b>&#36;{r["monthly_income"]:,.0f}</b> at a <b>{r["percent"]}</b> withdrawal rate.'
+            f'</div>', unsafe_allow_html=True)
+
+        plot = retirement_plot(r['values'], r['investment'], r['contribution'])
+        st.plotly_chart(plot, use_container_width=True, theme="streamlit")
         st.markdown('''The return rate uses the [Geometric Mean](https://analystprep.com/cfa-level-1-exam/quantitative-methods/arithmetic-return-vs-geometric-return/).''')
+
+    if st.session_state.summary_rows:
+        st.markdown("### Retirement Plan Comparison")
+        summary_df = pd.DataFrame(st.session_state.summary_rows)
+        summary_df = summary_df.rename(columns={'Withdrawl Rate': 'Withdrawl', 'Monthly Income': 'Income/mo', 'Annual Income': 'Income/yr'})
+        cols = ['Investor', 'Initial Inv.', 'Contribution', 'Return Rate', 'Withdrawl', 'Income/yr', 'Income/mo']
+        summary_df = summary_df[['Final Year'] + cols].set_index('Final Year')
+        summary_df.index.name = 'Retirement'
+        st.dataframe(summary_df)
 
     footer()
 
@@ -93,8 +103,14 @@ def main():
 st.set_page_config(
 page_title="Retirement Simulator",
 page_icon="💵",
+layout="wide",
 )
 with st.sidebar:
+  st.markdown("*A retirement plan comparison table will build as varying options are selected.*")
+  if st.button("Reset the Data"):
+      st.session_state.summary_rows = []
+      st.session_state.sim_results = None
+      st.rerun()
   side_content()
 
 if __name__ == "__main__":
