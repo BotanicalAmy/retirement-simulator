@@ -14,8 +14,7 @@ investor_returns = {
 
 st.set_page_config(page_title="Retirement Explorer", page_icon="🎯", layout="wide")
 st.markdown("# Retirement Explorer 🎯")
-st.markdown("*Explore how different choices affect your retirement future.*")
-
+st.markdown("Retirement timelines are dynamic, shifting with the priorities you set today. Explore different scenarios to discover a realistic plan for your future.")
 col1, col2, col3 = st.columns(3, gap="large")
 
 with col1:

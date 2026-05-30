@@ -21,6 +21,10 @@ from page_elements import footer, side_content, V_SPACE
 
 
 def about():
+    st.markdown("""
+This simulator connects current financial decisions, retirement timelines, and market variability into a cohesive view. The
+Financial Design page uses straightforward inputs; the forecasting relies on custom sampling algorithms.
+""")
 
     st.markdown("### How Forecasting Works")
     st.markdown("""
@@ -48,11 +52,11 @@ The scenarios are averaged to produce a single projected outcome, giving a more 
     st.markdown("""
 **Sampling methods**:
 
-- **10+ years**: Utilizes a *constrained* sampling method that mirrors the patterns found in historical market data.
-Each scenario is checked to ensure a realistic proportion of year-over-year gains and losses. This produces scenarios 
+- **10+ years**: Uses a *constrained* sampling method that mirrors the patterns found in historical market data.
+The sampler validates each scenario to ensure a realistic proportion of year-over-year gains and losses, producing outcomes
 that align more closely with historical long-term market cycles (image below).
 
-- **< 10 years**: Utilizes a *random* sampling method from the return rate distribution. Enforcing long-term pattern constraints would
+- **< 10 years**: Uses a *random* sampling method from the return rate distribution. Enforcing long-term pattern constraints would
 distort results with the narrow time frame. Random draws better reflect the higher uncertainty of near-term forecasts.
 """)
     st.divider()
@@ -60,24 +64,22 @@ distort results with the narrow time frame. Random draws better reflect the high
 #### Constrained sampling for 10+ year forecasts:
 """)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("**Positive Change Constraint** *(all investor types)*")
-        st.markdown("""
-- Between 40–50% of consecutive year-pairs must show a year-over-year increase
-- Mimics historical stock market patterns
-""")
-
-    with col2:
-        st.markdown("**Negative Returns Constraint** *(aggressive only)*")
-        st.markdown("""
-- At least 10% of sampled years must have negative returns
-- Skipped for conservative and moderate
-""")
+    st.dataframe(
+        pd.DataFrame({
+            'Constraint':  ['Positive Change', 'Negative Returns'],
+            'Applies To':  ['All investor types', 'Aggressive only'],
+            'Rule':        [
+                '40–50% of consecutive year-pairs must show a year-over-year increase',
+                'At least 10% of sampled years must have negative returns',
+            ],
+        }),
+        hide_index=True,
+        use_container_width=True,
+    )
 
     st.markdown("""
-The sampler loops until 5 valid scenarios are found. There is no cap on negative years, only a minimum of 10% negative values for aggressive
-investors. A sample could theoretically contain many more down years as long as the *positive-change* constraint is also satisfied.
+The sampler loops until 5 valid scenarios are found. Negative years have no cap — only a minimum of 10% for aggressive
+investors. A sample could theoretically contain many more down years as long as the *positive-change* constraint also holds.
 
 *In both cases, results are projections based on historical patterns and are not guarantees of future performance.*
 """)
@@ -145,9 +147,7 @@ investors. A sample could theoretically contain many more down years as long as 
     st.divider()
 
     st.markdown("### Exploring the Data")
-    st.markdown('''A python function was created to sample data from historical stock market returns. A repeated sampling method was used to create
-                a set of return rate distributions for the forecasting functions. Below, the statistics of each dataset are
-                included to show the value ranges of each category of return rates.''')
+    st.markdown("Historical return rates were sampled to build a distribution for each investor type. The statistics below show the value range for each.")
     V_SPACE(1)
 
     future_returns = pd.read_csv('data/futurereturns.csv')
@@ -166,16 +166,18 @@ investors. A sample could theoretically contain many more down years as long as 
     st.dataframe(statistics_table, use_container_width=True)
 
     st.markdown("### The Mathematical Model")
-    st.markdown('''After developing a large distribution of return rates, a Python function was written to model the patterns of historical
-                stock market returns. A set of 10,000 hypothetical returns was generated from this function to create a dataset for the
-                predictive models. For the original simulator version, a machine learning process using KNN model had the best performance and
-                was therefore utilized in the initial data application.''')
+    st.markdown("A custom Python function models historical stock market patterns and generated a dataset of 10,000 hypothetical returns. The original version used a KNN machine learning model; the current version relies on constrained statistical sampling.")
     st.markdown('''To learn more about the mathematical modeling behind this data app, check out the [Jupyter
                 Notebook](https://github.com/BotanicalAmy/Retirement-Forecaster) used for the development process.''')
 
     st.divider()
     st.markdown("### Release Notes")
     st.markdown("""
+
+**Version 1.2**
+Added a landing page to orient users across all three tools. Restructured the page order to reflect the intended arc:
+Financial Design → Retirement Explorer → Future Forecast. Added the Financial Design page, connecting present-day
+spending priorities to retirement outcomes. Updated copy throughout.
 
 **Version 1.1**
 Removed the previous KNN model option, relying entirely on constrained statistical sampling and a supplemental random component for short term investors.
