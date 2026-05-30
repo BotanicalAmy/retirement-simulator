@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 from page_elements import footer, side_content
 
 st.set_page_config(page_title="Financial Design", page_icon="🎨", layout="wide")
-st.markdown("# Financial Design")
+st.markdown("# Financial Design 🎨")
 st.markdown("""
 Future outcomes are enabled by small, incremental changes in the present. How you prioritize your spending dictates the options available to you in the future. Intentionally direct your finances to design a future that is aligned with what matters most.
 
